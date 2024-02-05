@@ -10,8 +10,9 @@ module WrAPI
     private
 
     def connection
-      options = setup_options
+      raise! ArgumentError, "Option for endpoint is not defined" unless endpoint
 
+      options = setup_options
       Faraday::Connection.new(options) do |connection|
         connection.use Faraday::Response::RaiseError
         connection.adapter Faraday.default_adapter
