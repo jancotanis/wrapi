@@ -24,11 +24,6 @@ module WrAPI
     # By default, don't set any connection options
     DEFAULT_CONNECTION_OPTIONS = {}
 
-    # The endpoint that will be used to connect if none is set
-    #
-    # @note There is no reason to use any other endpoint at this time
-    DEFAULT_ENDPOINT = 'https://api.com'.freeze
-
     # The response format appended to the path and sent in the 'Accept' header if none is set
     #
     # @note JSON is the only available format at this time
@@ -75,7 +70,6 @@ module WrAPI
 
       self.logger             = nil
       self.connection_options = DEFAULT_CONNECTION_OPTIONS
-      self.endpoint           = DEFAULT_ENDPOINT
       self.format             = DEFAULT_FORMAT
       self.page_size          = DEFAULT_PAGE_SIZE
       self.user_agent         = DEFAULT_USER_AGENT
