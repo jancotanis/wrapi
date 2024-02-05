@@ -13,7 +13,7 @@ end
 describe 'config' do
   it '#1 defaults/reset' do
     WrAPI.reset
-    assert value(WrAPI.endpoint).must_equal WrAPI::Configuration::DEFAULT_ENDPOINT, '.endpoint'
+    assert_nil WrAPI.endpoint, '.endpoint empty'
     assert value(WrAPI.format).must_equal WrAPI::Configuration::DEFAULT_FORMAT, '.format'
     assert value(WrAPI.user_agent).must_equal WrAPI::Configuration::DEFAULT_USER_AGENT, '.user_agent'
     assert WrAPI.logger.nil?, '.logger'
