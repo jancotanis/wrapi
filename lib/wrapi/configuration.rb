@@ -67,6 +67,7 @@ module WrAPI
       self.client_secret      = nil
       self.username           = nil
       self.password           = nil
+      self.endpoint           = nil
 
       self.logger             = nil
       self.connection_options = DEFAULT_CONNECTION_OPTIONS

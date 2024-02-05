@@ -20,7 +20,7 @@ describe 'config' do
     WrAPI.endpoint = 'http://helloworld.com'
     assert value(WrAPI.endpoint).must_equal 'http://helloworld.com', '.endpoint='
     WrAPI.reset
-    assert value(WrAPI.endpoint).must_equal WrAPI::Configuration::DEFAULT_ENDPOINT, 'reset, check .endpoint'
+    assert_nil WrAPI.endpoint, 'reset, check .endpoint'
   end
   it '#2 configure block' do
     WrAPI.configure do |config|
