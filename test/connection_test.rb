@@ -13,17 +13,15 @@ describe 'connection' do
   it '#1 no endpoint' do
     c = MockAPI.client
     assert_raises ArgumentError do
-      c.get( "" )
+      c.get( '/' )
     end
   end
   it '#1 valid endpoint' do
     c = MockAPI.client({ format: 'html', endpoint: 'https://www.google.com' })
-    c.get( "" )
+    c.get( '/' )
   rescue ArgumentError 
-    # should not raise endpoint argument excpetion
+    # should not raise endpoint argument exception
     flunk 'Unexpected ArgumentError raised'
-  else
-    # ok fine
   end
 
 end

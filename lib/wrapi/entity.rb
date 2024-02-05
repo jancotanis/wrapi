@@ -59,7 +59,7 @@ module WrAPI
       def entify(a)
         a.map do |item|
           item.is_a?(Hash) ? self.class.new(item) : item
-        end if !a.empty? && a[0].is_a?(Hash)
+        end
       end
     end
   end

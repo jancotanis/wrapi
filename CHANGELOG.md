@@ -5,3 +5,9 @@
 
 ## [0.1.1] - 2024-02-5
 - default endpoint to nil and raise error in connection when not available
+
+## [0.1.2] - 2024-02-5
+- default endpoint to nil and raise error in connection when not available
+
+## [0.1.3] - 2024-02-5
+- fix entity should return empty array insted of nil

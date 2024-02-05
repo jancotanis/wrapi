@@ -26,6 +26,7 @@ describe 'entity' do
       'lastBackupAttemptDate': 'string',
       'backupDuration': 0,
       'size': 0,
+      'empty_array': [],
       'backupStatus': [
         {
           'subSource': 'string',
@@ -40,6 +41,7 @@ describe 'entity' do
     assert value(e.userId).must_equal h[:userId], 'e.userId'
     assert value(e.backupStatus.first.subSource).must_equal h[:backupStatus].first[:subSource],
                                                             'e.backupStatus.first.subSource'
+    assert value(e.empty_array).must_equal [], 'e.empty_array'
   end
   it '#4 to_json' do
     h = {
