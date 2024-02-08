@@ -1,4 +1,6 @@
-require_relative './version'
+#require_relative './pagination'
+#require_relative './version'
+
 module WrAPI
   # Defines constants and methods related to configuration
   module Configuration
@@ -18,7 +20,8 @@ module WrAPI
       :logger,
       :format,
       :page_size,
-      :user_agent
+      :user_agent,
+      :pagination_class
     ].freeze
 
     # By default, don't set any connection options
@@ -36,6 +39,8 @@ module WrAPI
 
     # The user agent that will be sent to the API endpoint if none is set
     DEFAULT_USER_AGENT = "Ruby API wrapper #{WrAPI::VERSION}".freeze
+    
+    DEFAULT_PAGINATION = WrAPI::RequestPagination::DefaultPager
 
     # @private
     attr_accessor *VALID_OPTIONS_KEYS
@@ -74,6 +79,7 @@ module WrAPI
       self.format             = DEFAULT_FORMAT
       self.page_size          = DEFAULT_PAGE_SIZE
       self.user_agent         = DEFAULT_USER_AGENT
+      self.pagination_class   = DEFAULT_PAGINATION
     end
   end
 end

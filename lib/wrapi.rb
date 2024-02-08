@@ -1,11 +1,12 @@
-require File.expand_path('wrapi/authentication', __dir__)
-require File.expand_path('wrapi/connection', __dir__)
-require File.expand_path('wrapi/configuration', __dir__)
-require File.expand_path('wrapi/api', __dir__)
-require File.expand_path('wrapi/request', __dir__)
-require File.expand_path('wrapi/entity', __dir__)
-require File.expand_path('wrapi/respond_to', __dir__)
 require File.expand_path('wrapi/version', __dir__)
+require File.expand_path('wrapi/pagination', __dir__)
+require File.expand_path('wrapi/configuration', __dir__)
+require File.expand_path('wrapi/connection', __dir__)
+require File.expand_path('wrapi/api', __dir__)
+require File.expand_path('wrapi/entity', __dir__)
+require File.expand_path('wrapi/request', __dir__)
+require File.expand_path('wrapi/respond_to', __dir__)
+require File.expand_path('wrapi/authentication', __dir__)
 
 module WrAPI
   extend RespondTo

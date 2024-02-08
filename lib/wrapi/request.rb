@@ -1,6 +1,5 @@
 require 'uri'
 require 'json'
-require File.expand_path('entity', __dir__)
 
 module WrAPI
   # Defines HTTP request methods
@@ -10,39 +9,26 @@ module WrAPI
     # Perform an HTTP GET request and return entity incase format is :json
     def get(path, options = {})
       response = request(:get, path, options)
-      :json.eql?(format) ? Entity.new(response.body) : response.body
+      :json.eql?(format) ? Entity.new(pagination_class.data(response.body)) : response.body
     end
 
-    # Perform an HTTP GET request for paged date sets response ind to
-    # Name          Description
-    # pageSize      The number of records to display per page
-    # page          The page number
-    # nextPageToken Next page token
-    #
-    # response format { "page": 0, "totalPages": 0, "total": 0, "nextPageToken": "string", "data": [] }
+    # Perform an HTTP GET request for paged date sets response
     def get_paged(path, options = {}, &block)
-      raise! ArgumentError,
-             "Pages requests should be json formatted (given format '#{format}')" unless :json.eql? format
+      raise ArgumentError,
+            "Pages requests should be json formatted (given format '#{format}')" unless :json.eql? format
 
       result = []
-      page = 1
-      total = page + 1
-      next_page = ''
-      while page <= total
-        following_page = { pageSize: page_size }
-        following_page.merge!({ page: page, nextPageToken: next_page }) unless next_page.empty?
-
-        response = request(:get, path, options.merge(following_page))
-        data = response.body
-        d = data['data'].map { |e| Entity.new(e) }
+      pager = create_pager
+      while pager.more_pages?
+        response = request(:get, path, options.merge(pager.page_options))
+        #data = response.body
+        d = pager.class.data(response.body).map { |e| Entity.new(e) }
         if block_given?
           yield(d)
         else
           result += d
         end
-        page += 1
-        total = data['totalPages'].to_i
-        next_page = data['nextPageToken']
+        pager.next_page!(response.body)
       end
       result unless block_given?
     end
@@ -63,6 +49,10 @@ module WrAPI
     end
 
     private
+
+    def create_pager
+      pagination_class.new(page_size)
+    end
 
     # Perform an HTTP request
     def request(method, path, options)

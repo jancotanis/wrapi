@@ -11,3 +11,7 @@
 
 ## [0.1.3] - 2024-02-5
 - fix entity should return empty array insted of nil
+
+## [0.2.0] - 2024-02-8
+- implement json pagination
+
