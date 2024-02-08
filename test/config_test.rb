@@ -1,6 +1,7 @@
 require 'test_helper'
+require 'logger'
 
-module MockAPI
+module ConfigMockAPI
   extend WrAPI::Configuration
   extend WrAPI::RespondTo
 
@@ -23,6 +24,7 @@ describe 'config' do
     assert_nil WrAPI.endpoint, 'reset, check .endpoint'
   end
   it '#2 configure block' do
+    logger = Logger.new(IO::NULL)
     WrAPI.configure do |config|
       config.access_token = 'YOUR_ACCESS_TOKEN'
       config.client_id = 'YOUR_CLIENT_ID'
@@ -30,7 +32,7 @@ describe 'config' do
       config.endpoint = 'http://api.abc.com'
       config.format = 'xml'
       config.user_agent = 'Custom User Agent'
-      config.logger = true
+      config.logger = logger
     end
     assert value(WrAPI.access_token).must_equal 'YOUR_ACCESS_TOKEN', '.access_token='
     assert value(WrAPI.client_id).must_equal 'YOUR_CLIENT_ID', '.client_id='
@@ -38,7 +40,7 @@ describe 'config' do
     assert value(WrAPI.endpoint).must_equal 'http://api.abc.com', '.format='
     assert value(WrAPI.format).must_equal 'xml', '.format='
     assert value(WrAPI.user_agent).must_equal 'Custom User Agent', '.user_agent='
-    assert value(WrAPI.logger).must_equal true, '.logger='
+    assert value(WrAPI.logger).must_equal logger, '.logger='
   end
   it '#3 configure all' do
     WrAPI::Configuration::VALID_OPTIONS_KEYS.each do |key|
@@ -58,7 +60,7 @@ describe 'config' do
       user_agent: 'Custom User Agent',
       logger: true
     }
-    c = MockAPI.client(options)
+    c = ConfigMockAPI.client(options)
     assert value(c.access_token).must_equal 'YOUR_ACCESS_TOKEN', '.access_token='
     assert value(c.client_id).must_equal 'YOUR_CLIENT_ID', '.client_id='
     assert value(c.client_secret).must_equal 'YOUR_CLIENT_SECRET', '.client_secret='
@@ -70,6 +72,6 @@ describe 'config' do
     assert_raises NotImplementedError do
       WrAPI.client
     end
-    assert value(MockAPI.client.class).must_equal WrAPI::API, '.client'
+    assert value(ConfigMockAPI.client.class).must_equal WrAPI::API, '.client'
   end
 end
