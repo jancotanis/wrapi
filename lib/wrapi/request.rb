@@ -21,7 +21,6 @@ module WrAPI
       pager = create_pager
       while pager.more_pages?
         response = request(:get, path, options.merge(pager.page_options))
-        #data = response.body
         d = pager.class.data(response.body).map { |e| Entity.new(e) }
         if block_given?
           yield(d)
