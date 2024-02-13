@@ -6,7 +6,7 @@ module WrAPI
   # required attributes format
   module RequestPagination
 
-    # Defaut pages asumes all sdata retrieved in a single go.
+    # Defaut pages asumes all data retrieved in a single go.
     class DefaultPager
 
       # initialize with page size
