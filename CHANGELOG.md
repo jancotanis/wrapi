@@ -15,3 +15,6 @@
 ## [0.2.0] - 2024-02-8
 - implement json pagination
 
+## [0.2.0] - 2024-02-13
+- implement option to manipulate request
+
