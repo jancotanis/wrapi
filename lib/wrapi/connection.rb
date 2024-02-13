@@ -52,9 +52,9 @@ module WrAPI
       connection.response :logger, logger, { headers: true, bodies: true } do |l|
         # filter json content
         l.filter(/("password":")(.+?)(".*)/, '\1[REMOVED]\3')
-        l.filter(/("accessToken":")(.+?)(".*)/, '\1[REMOVED]\3')
+        l.filter(/("[Aa]ccess_?[Tt]oken":")(.+?)(".*)/, '\1[REMOVED]\3')
         # filter header content
-        l.filter(/(client-secret:.)([^&]+)/, '\1[REMOVED]')
+        l.filter(/(client[-_]secret[:=].)([^&]+)/, '\1[REMOVED]')
         l.filter(/(Authorization:.)([^&]+)/, '\1[REMOVED]')
       end
     end
