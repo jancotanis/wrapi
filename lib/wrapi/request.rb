@@ -29,7 +29,7 @@ module WrAPI
         end
         d = pager.class.data(response.body)
         if d.is_a? Array
-          d = pager.class.data(response.body).map { |e| Entity.new(e) }
+          d = d.map { |e| Entity.new(e) }
         else
           d = Entity.new(d)
         end
