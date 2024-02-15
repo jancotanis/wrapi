@@ -2,10 +2,15 @@
 #require_relative './version'
 
 module WrAPI
-  # Defines constants and methods related to configuration
-  module Configuration
-    # An array of valid keys in the options hash when configuring a {Integra365::API}
 
+  # Defines constants and methods related to configuration
+  # If configuration is overridden, please add following methods
+  # @see [self.extended(base)] to initialize the Configuration
+  # If additional options are added, please overide
+  # @see [reset] to initialize variables
+  # @see [options] to return the correct set of options
+  module Configuration
+    # An array of valid keys in the options hash when configuring a {WrAPI::API}
     VALID_OPTIONS_KEYS = [
       :access_token,
       :token_type,
