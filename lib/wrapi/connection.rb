@@ -33,7 +33,7 @@ module WrAPI
           'User-Agent': user_agent
         },
         url: endpoint
-      }.merge(connection_options)
+      }.merge(connection_options || {})
     end
 
     # callback method to setup api authorization
