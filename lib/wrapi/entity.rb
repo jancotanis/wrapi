@@ -6,15 +6,22 @@ module WrAPI
     class Entity
       attr_reader :attributes
 
+      # factory method to create entity or array of entities
+      def self.create(attributes)
+
+        if attributes.is_a? Array
+          Entity.entify(attributes)
+        else
+          Entity.new(attributes) if attributes
+        end
+      end
+
       def initialize(attributes)
         @_raw = attributes
 
         case attributes
         when Hash
           @attributes = attributes.clone.transform_keys(&:to_s)
-        when Array
-          # make deep copy
-          @attributes = entify(attributes)
         else
           @attributes = attributes.clone
         end
@@ -34,7 +41,7 @@ module WrAPI
             @attributes[method_sym.to_s] = self.class.new(r)
           when Array
             # make deep copy
-            @attributes[method_sym.to_s] = r = entify(r)
+            @attributes[method_sym.to_s] = r = Entity.entify(r)
             r
           else
             r
@@ -56,9 +63,10 @@ module WrAPI
         @_raw.to_json
       end
       
-      def entify(a)
+      def self.entify(a)
         a.map do |item|
-          item.is_a?(Hash) ? self.class.new(item) : item
+          #item.is_a?(Hash) ? self.class.new(item) : item
+          Entity.create(item)
         end
       end
     end

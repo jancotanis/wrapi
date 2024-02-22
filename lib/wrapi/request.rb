@@ -7,12 +7,12 @@ module WrAPI
   module Request
 
     # Perform an HTTP GET request and return entity incase format is :json
-    #  @return if format is :json an [Entity] is returned, otherwhise the response body
-    def get(path, options = {})
+    #  @return if format is :json and !raw an [Entity] is returned, otherwhise the response body
+    def get(path, options = {}, raw=false)
       response = request(:get, path, options) do |request|
         yield(request) if block_given?
       end
-      :json.eql?(format) ? Entity.new(pagination_class.data(response.body)) : response.body
+      entity_response(response, raw)
     end
 
     # Perform an HTTP GET request for paged date sets response
@@ -27,19 +27,16 @@ module WrAPI
         response = request(:get, path, options.merge(pager.page_options)) do |req|
           request_labda.call(req) if request_labda
         end
-        d = pager.class.data(response.body)
-        if d.is_a? Array
-          d = d.map { |e| Entity.new(e) }
-        else
-          d = Entity.new(d)
-        end
-        if block_given?
-          yield(d)
-        else
-          if d.is_a? Array
-            result += d
+        if d = pager.class.data(response.body)
+          d = Entity.create(d)
+          if block_given?
+            yield(d)
           else
-            result << d
+            if d.is_a? Array
+              result += d
+            else
+              result << d
+            end
           end
         end
         pager.next_page!(response.body)
@@ -49,26 +46,29 @@ module WrAPI
 
     # Perform an HTTP POST request
     # @return response is returned in json if format is :json
-    def post(path, options = {})
+    def post(path, options = {}, raw=true)
       response = request(:post, path, options) do |request|
         yield(request) if block_given?
       end
+      entity_response(response, raw)
     end
 
     # Perform an HTTP PUT request
     # @return response is returned in json if format is :json
-    def put(path, options = {})
+    def put(path, options = {}, raw=true)
       response = request(:put, path, options) do |request|
         yield(request) if block_given?
       end
+      entity_response(response, raw)
     end
 
     # Perform an HTTP DELETE request
     # @return response is returened
-    def delete(path, options = {})
+    def delete(path, options = {}, raw=false)
       response = request(:delete, path, options) do |request|
         yield(request) if block_given?
       end
+      entity_response(response, raw)
     end
 
     private
@@ -92,6 +92,14 @@ module WrAPI
         end
       end
       response
+    end
+
+    def entity_response(response, raw=false)
+      if :json.eql?(format) && !raw
+        Entity.create(pagination_class.data(response.body))
+      else
+        response
+      end
     end
   end
 end
