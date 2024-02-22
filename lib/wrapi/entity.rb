@@ -28,25 +28,15 @@ module WrAPI
       end
 
       def method_missing(method_sym, *arguments, &block)
-        len = arguments.length
         # assignment
         if (method = method_sym[/.*(?==\z)/m])
-          raise! ArgumentError, "wrong number of arguments (given #{len}, expected 1)", caller(1) unless len == 1
+          raise! ArgumentError, "wrong number of arguments (given #{arguments.length}, expected 1)", caller(1) unless arguments.length == 1
 
           @attributes[method] = arguments[0]
         elsif @attributes.include? method_sym.to_s
-          r = @attributes[method_sym.to_s]
-          case r
-          when Hash
-            @attributes[method_sym.to_s] = self.class.new(r)
-          when Array
-            # make deep copy
-            @attributes[method_sym.to_s] = r = Entity.entify(r)
-            r
-          else
-            r
-          end
+          accessor(method_sym.to_s)
         else
+          # delegate to hash
           @attributes.send(method_sym, *arguments, &block)
         end
       end
@@ -62,7 +52,19 @@ module WrAPI
       def to_json(options = {})
         @_raw.to_json
       end
-      
+
+      def accessor(method)
+          case @attributes[method]
+          when Hash
+            @attributes[method] = self.class.new(@attributes[method])
+          when Array
+            # make deep copy
+            @attributes[method] = Entity.entify(@attributes[method])
+          else
+            @attributes[method]
+          end
+      end
+
       def self.entify(a)
         a.map do |item|
           #item.is_a?(Hash) ? self.class.new(item) : item
