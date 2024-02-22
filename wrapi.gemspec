@@ -31,4 +31,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'faraday'
   s.add_development_dependency 'minitest'
   s.add_development_dependency 'rubocop'
+  s.add_development_dependency 'simplecov'
+  s.add_development_dependency 'webmock'
 end

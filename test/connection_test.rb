@@ -5,17 +5,21 @@ module ConnectionMockAPI
   extend WrAPI::RespondTo
 
   def self.client(options = {})
+    WebMock.allow_net_connect!
     WrAPI::API.new(options)
   end
 end
 
 describe 'connection' do
   it '#1 no endpoint' do
+    ConnectionMockAPI.user_agent = "ConnectionMocking all the time"
     ConnectionMockAPI.reset
     c = ConnectionMockAPI.client
     assert_raises ArgumentError do
       c.get( '/' )
     end
+  rescue
+    puts c.inspect
   end
   it '#1 valid endpoint' do
     c = ConnectionMockAPI.client({ format: 'html', endpoint: 'https://www.google.com' })

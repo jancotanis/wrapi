@@ -1,9 +1,14 @@
 # frozen_string_literal: true
+require 'simplecov'
+SimpleCov.start
 
 $LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 require 'wrapi'
 require 'minitest/autorun'
 require 'minitest/spec'
+require 'webmock/minitest'
+
+include WebMock::API
 
 def respond_to_template(template, object, class_name)
   template.keys do |k|
