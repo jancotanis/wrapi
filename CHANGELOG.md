@@ -18,3 +18,10 @@
 ## [0.2.0] - 2024-02-13
 - implement option to manipulate request
 
+## [0.4.0] - 2024-02-13
+- testing/code quality
+  authentication tests (mocked)
+  test string/{}/[] entities returned with mock
+  request tests with mock including delete/put/post
+- Entity fix issues returning json arrays
+  Request option to return raw response

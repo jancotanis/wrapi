@@ -1,6 +1,9 @@
 # Wrapper API 
+[![Version](https://img.shields.io/gem/v/wrapi.svg)](https://rubygems.org/gems/wrapi)
+[![Maintainability](https://api.codeclimate.com/v1/badges/d84930f1f1d8fae05c5c/maintainability)](https://codeclimate.com/github/jancotanis/wrapi/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/d84930f1f1d8fae05c5c/test_coverage)](https://codeclimate.com/github/jancotanis/wrapi/test_coverage)
 
-Some generic cody extracted from  by a number of api wrapper gems. Internal used only.
+Some generic code extracted from  by a number of api wrapper gems. Internal used only.
 
 ## Installation
 
