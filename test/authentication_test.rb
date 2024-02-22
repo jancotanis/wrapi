@@ -16,8 +16,7 @@ module AuthMockAPI
     with = {
       headers: {
         'Accept'=>'application/json; charset=utf-8',
-        'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-        'User-Agent'=>'Ruby API wrapper 0.3.0'
+        'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3'
       } }
     with[:body] = body if body
     WebMock.stub_request(:post, URL+path).

@@ -20,8 +20,7 @@ module RequestMockAPI
         with(
           headers: {
             'Accept'=>'application/json; charset=utf-8',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby API wrapper 0.3.0'
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3'
           }).
         to_return(status: 200, body: '{"ip": "145.131.192.220"}', headers: { 'Content-Type' => 'application/json' })
     url
@@ -30,8 +29,7 @@ module RequestMockAPI
     url = 'http://array.jsontest.com/'
     with = { headers: {
             'Accept'=>'application/json; charset=utf-8',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby API wrapper 0.3.0'
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3'
           }}
     to_return = {status: 200, headers: { 'Content-Type' => 'application/json' }}
     if body
