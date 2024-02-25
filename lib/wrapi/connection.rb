@@ -38,7 +38,7 @@ module WrAPI
 
     # callback method to setup api authorization
     def setup_authorization(connection)
-      connection.authorization :Bearer, access_token if access_token
+      connection.headers['Authorization'] = "Bearer #{access_token}" if access_token
     end
 
     # callback method to setup api headers
