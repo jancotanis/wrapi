@@ -19,7 +19,7 @@ module WrAPI
     #  @return nil if block given, otherwise complete concatenated json result set
     def get_paged(path, options = {}, request_labda = nil)
       raise ArgumentError,
-            "Pages requests should be json formatted (given format '#{format}')" unless :json.eql? format
+            "Pages requests should be json formatted (given format '#{format}')" unless is_json?
 
       result = []
       pager = create_pager
@@ -70,6 +70,10 @@ module WrAPI
       end
       entity_response(response, raw)
     end
+    
+    def is_json?
+      format && 'json'.eql?(format.to_s)
+    end
 
     private
 
@@ -88,14 +92,18 @@ module WrAPI
         when :post, :put
           request.headers['Content-Type'] = "application/#{format}"
           request.path = uri.escape(path)
-          request.body = options.to_json unless options.empty?
+          if is_json? && !options.empty?
+            request.body = options.to_json
+          else
+            request.body = URI.encode_www_form(options) unless options.empty?
+          end
         end
       end
       response
     end
 
     def entity_response(response, raw=false)
-      if :json.eql?(format) && !raw
+      if is_json? && !raw
         Entity.create(pagination_class.data(response.body))
       else
         response

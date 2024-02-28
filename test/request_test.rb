@@ -124,4 +124,8 @@ describe 'request' do
     assert_nil c.delete(''), "delete returning nil"
     
   end
+  it '#5 non json' do
+    c = RequestMockAPI.client({ endpoint: url })
+    assert c.is_json?, 'should be json by default'
+  end
 end

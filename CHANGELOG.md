@@ -25,3 +25,6 @@
   request tests with mock including delete/put/post
 - Entity fix issues returning json arrays
   Request option to return raw response
+
+## [0.4.1] - 2024-02-28
+- fix issue with post body only supported as json
