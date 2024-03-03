@@ -70,7 +70,7 @@ module WrAPI
       end
       entity_response(response, raw)
     end
-    
+
     def is_json?
       format && 'json'.eql?(format.to_s)
     end
@@ -86,12 +86,17 @@ module WrAPI
       response = connection.send(method) do |request|
         yield(request) if block_given?
         uri = URI::Parser.new
+        _path = uri.parse(path)
         case method
         when :get, :delete
-          request.url(uri.escape(path), options)
+          _path.path = uri.escape(_path.path)
+          request.url(_path.to_s, options)
         when :post, :put
-          request.headers['Content-Type'] = "application/#{format}"
-          request.path = uri.escape(path)
+          request.headers['Content-Type'] = "application/#{format}" unless request.headers['Content-Type']
+          _path.path = uri.escape(_path.path)
+
+          request.path = _path.to_s
+
           if is_json? && !options.empty?
             request.body = options.to_json
           else
