@@ -41,6 +41,23 @@ module RequestMockAPI
         to_return(to_return)
     url
   end
+  def self.escaping
+    url = 'http://escape.com/this?mail%26domain.com'
+    with = { headers: {
+            'Accept'=>'application/json; charset=utf-8',
+            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+            'User-Agent'=>'Ruby API wrapper 0.4.2'
+          }}
+    to_return = {status: 200, headers: { 'Content-Type' => 'application/json' }}
+    WebMock.stub_request(:any, url).
+        with(with).
+        to_return(to_return)
+    # add wrongly escaped version
+    WebMock.stub_request(:any, 'http://escape.com/this?mail%2526domain.com').
+        with(with).
+        to_return(to_return)
+    url
+  end
 end
 
 describe 'request' do
@@ -125,7 +142,14 @@ describe 'request' do
     
   end
   it '#5 non json' do
-    c = RequestMockAPI.client({ endpoint: url })
+    c = RequestMockAPI.client({ endpoint: 'http://json-test.com' })
     assert c.is_json?, 'should be json by default'
+  end
+  it '#6 escaping' do
+    url = RequestMockAPI.escaping
+    c = RequestMockAPI.client({ endpoint: url })
+    # schould be escaped to %20
+    r = c.get(url,{},true)
+    assert value(r.env.url.to_s).must_equal(url.to_s), 'path nog escaped'
   end
 end
