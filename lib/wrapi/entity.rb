@@ -8,7 +8,6 @@ module WrAPI
 
       # factory method to create entity or array of entities
       def self.create(attributes)
-
         if attributes.is_a? Array
           Entity.entify(attributes)
         else
@@ -17,8 +16,6 @@ module WrAPI
       end
 
       def initialize(attributes)
-        @_raw = attributes
-
         case attributes
         when Hash
           @attributes = attributes.clone.transform_keys(&:to_s)
@@ -50,7 +47,7 @@ module WrAPI
       end
 
       def to_json(options = {})
-        @_raw.to_json
+        @attributes.to_json
       end
 
       def accessor(method)
@@ -66,9 +63,13 @@ module WrAPI
       end
 
       def self.entify(a)
-        a.map do |item|
-          #item.is_a?(Hash) ? self.class.new(item) : item
-          Entity.create(item)
+        if ( a.count > 0 ) && ( a.first.is_a? Hash )
+          a.dup.map do |item|
+            #item.is_a?(Hash) ? self.class.new(item) : item
+            Entity.create(item)
+          end
+        else
+          a
         end
       end
     end

@@ -26,8 +26,11 @@
 - Entity fix issues returning json arrays
   Request option to return raw response
 
-  ## [0.4.1] - 2024-02-28
-  - fix issue with post body only supported as json
+## [0.4.1] - 2024-02-28
+- fix issue with post body only supported as json
 
-  ## [0.4.2] - 2024-03-03
-  - fix issue with escaping query parameters included in path
+## [0.4.2] - 2024-03-03
+- fix issue with escaping query parameters included in path
+
+## [0.4.3] - 2024-03-07
+- fix issue json generation for updated attributes

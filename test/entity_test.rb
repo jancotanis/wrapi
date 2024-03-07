@@ -116,4 +116,39 @@ describe 'entity' do
     e = WrAPI::Request::Entity.create(nil)
     assert_nil e, 'nil expected'
   end
+  it "#8 create clones" do
+    user = {
+      'user_id'=> 1,
+      'user_name'=> 'John Doe'
+    }
+    e = WrAPI::Request::Entity.create(user)
+    user['user_id'] = 2
+    assert !e.to_json.eql?(user.to_json), 'check updated json field does not impact entity'
+  end
+  it "#9 update json" do
+    user = {
+      'user_id'=> 1,
+      'user_name'=> 'John Doe',
+      'nested_a' => [{'a'=>'ha'},{'b'=>'hb'}],
+      'nested_a_num' => [1,2,3,4,5,6,7,8,9],
+      'nested_h' => {'a'=>'a','b'=>'b','c'=>'c'}
+    }
+    e = WrAPI::Request::Entity.create(user)
+    e.user_id = user['user_id'] = 2
+    assert value(e.to_json).must_equal user.to_json, 'check updated json field'
+    assert value(e.nested_h.to_json).must_equal(user['nested_h'].to_json), 'check nested array'
+    e.nested_h = user['nested_h'] = {'x'=>'x','y'=>'y'}
+    assert value(e.nested_h.to_json).must_equal(user['nested_h'].to_json), 'check nested array update'
+    e.nested_a.first.a = user['nested_a'].first['a'] = 'HA'
+    assert value(e.nested_a.first.a).must_equal('HA'), 'check nested array update'
+    assert value(e.nested_a_num.first).must_equal 1, 'check numeric array'
+    e.nested_a_num[0] = user['nested_a_num'][0] = 2
+    assert value(e.to_json).must_equal user.to_json, 'check numeric array'
+
+    e.nested_h = user['nested_h'] = {'d'=>'d','e'=>'e'}
+    assert value(e.to_json).must_equal user.to_json, 'check updated hash'
+
+    e.nested_h = WrAPI::Request::Entity.create(user['nested_h'])
+    assert value(e.to_json).must_equal user.to_json, 'check updated entity hash'
+  end
 end
