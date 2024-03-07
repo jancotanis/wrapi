@@ -85,18 +85,15 @@ module WrAPI
     def request(method, path, options)
       response = connection.send(method) do |request|
         yield(request) if block_given?
+        request.headers['Content-Type'] = "application/#{format}" unless request.headers['Content-Type']
         uri = URI::Parser.new
         _path = uri.parse(path)
+        _path.path = uri.escape(_path.path)
         case method
         when :get, :delete
-          _path.path = uri.escape(_path.path)
           request.url(_path.to_s, options)
         when :post, :put
-          request.headers['Content-Type'] = "application/#{format}" unless request.headers['Content-Type']
-          _path.path = uri.escape(_path.path)
-
           request.path = _path.to_s
-
           if is_json? && !options.empty?
             request.body = options.to_json
           else
