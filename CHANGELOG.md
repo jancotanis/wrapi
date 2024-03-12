@@ -34,3 +34,6 @@
 
 ## [0.4.3] - 2024-03-07
 - fix issue json generation for updated attributes
+
+## [0.4.4] - 2024-03-12
+- fix typo and implement clone for entities

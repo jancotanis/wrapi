@@ -27,7 +27,7 @@ module WrAPI
       def method_missing(method_sym, *arguments, &block)
         # assignment
         if (method = method_sym[/.*(?==\z)/m])
-          raise! ArgumentError, "wrong number of arguments (given #{arguments.length}, expected 1)", caller(1) unless arguments.length == 1
+          raise ArgumentError, "wrong number of arguments (given #{arguments.length}, expected 1)", caller(1) unless arguments.length == 1
 
           @attributes[method] = arguments[0]
         elsif @attributes.include? method_sym.to_s
@@ -60,6 +60,12 @@ module WrAPI
           else
             @attributes[method]
           end
+      end
+      
+      def clone
+        c = super
+        c.attributes = @attributes.clone
+        c
       end
 
       def self.entify(a)

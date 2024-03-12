@@ -44,9 +44,7 @@ module RequestMockAPI
   def self.escaping
     url = 'http://escape.com/this?mail%26domain.com'
     with = { headers: {
-            'Accept'=>'application/json; charset=utf-8',
-            'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-            'User-Agent'=>'Ruby API wrapper 0.4.2'
+            'Accept'=>'application/json; charset=utf-8'
           }}
     to_return = {status: 200, headers: { 'Content-Type' => 'application/json' }}
     WebMock.stub_request(:any, url).
