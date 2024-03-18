@@ -37,3 +37,6 @@
 
 ## [0.4.4] - 2024-03-12
 - fix typo and implement clone for entities
+
+## [0.4.5] - 2024-03-12
+- rafactorings code readability
