@@ -26,10 +26,11 @@ module WrAPI
 
       def method_missing(method_sym, *arguments, &block)
         # assignment
-        if (method = method_sym[/.*(?==\z)/m])
+        assignment = method_sym[/.*(?==\z)/m]
+        if assignment
           raise ArgumentError, "wrong number of arguments (given #{arguments.length}, expected 1)", caller(1) unless arguments.length == 1
 
-          @attributes[method] = arguments[0]
+          @attributes[assignment] = arguments[0]
         elsif @attributes.include? method_sym.to_s
           accessor(method_sym.to_s)
         else
