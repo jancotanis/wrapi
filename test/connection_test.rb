@@ -1,12 +1,15 @@
 require 'test_helper'
 
+CON_LOGGER = 'connection_test.log'
+File.delete(CON_LOGGER) if File.exist?(CON_LOGGER)
+
 module ConnectionMockAPI
   extend WrAPI::Configuration
   extend WrAPI::RespondTo
 
   def self.client(options = {})
     WebMock.allow_net_connect!
-    WrAPI::API.new(options)
+    WrAPI::API.new({ logger: Logger.new(CON_LOGGER) }.merge(options))
   end
 end
 

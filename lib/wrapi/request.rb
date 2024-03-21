@@ -29,8 +29,7 @@ module WrAPI
           # inject headers...
           request_labda.call(req) if request_labda
         end
-        if d = pager.class.data(response.body)
-          d = Entity.create(d)
+        handle_data(response.body,pager) do |d|
           if block_given?
             yield(d)
           else
@@ -114,7 +113,12 @@ module WrAPI
         request.body = URI.encode_www_form(options) unless options.empty?
       end
     end
-
+    def handle_data(body,pager)
+      if d = pager.class.data(body)
+        d = Entity.create(d)
+        yield(d) if block_given?
+      end
+    end
     # add data to array and check if data itself is an array
     def add_data(result,data)
       if data.is_a? Array
