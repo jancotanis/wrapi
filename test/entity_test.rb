@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'yaml'
 
 describe 'entity' do
   it '#1 hash to attr_reader' do
@@ -150,5 +151,21 @@ describe 'entity' do
 
     e.nested_h = WrAPI::Request::Entity.create(user['nested_h'])
     assert value(e.to_json).must_equal user.to_json, 'check updated entity hash'
+  end
+
+  it "#10 to yaml" do
+    user = {
+      'yaml'=> 1,
+      'json'=> '2'
+    }
+
+    e = WrAPI::Request::Entity.create(user)
+    YAML_FILE = 'yaml-temp.yml'
+    File.open(YAML_FILE, "w") do |f|
+      f.puts(YAML.dump(e))
+    end
+
+    ee = YAML.load_file(YAML_FILE)
+    assert e.eql?(ee), 'object load from yaml must be equal'
   end
 end

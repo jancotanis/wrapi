@@ -39,4 +39,7 @@
 - fix typo and implement clone for entities
 
 ## [0.4.5] - 2024-03-12
-- rafactorings code readability
+- refactorings code readability
+
+## [0.4.6] - 2024-06-17
+- fix issue with loading Entity from yaml

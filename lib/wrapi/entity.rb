@@ -4,24 +4,30 @@ module WrAPI
   # Defines HTTP request methods
   module Request
     class Entity
-      attr_reader :attributes
-
       # factory method to create entity or array of entities
-      def self.create(attributes)
-        if attributes.is_a? Array
-          Entity.entify(attributes)
+      def self.create(attr)
+        if attr.is_a? Array
+          Entity.entify(attr)
         else
-          Entity.new(attributes) if attributes
+          Entity.new(attr) if attr
         end
       end
 
-      def initialize(attributes)
-        case attributes
+      def initialize(attr)
+        case attr
         when Hash
-          @attributes = attributes.clone.transform_keys(&:to_s)
+          @attributes = attr.clone.transform_keys(&:to_s)
         else
-          @attributes = attributes.clone
+          @attributes = attr.clone
         end
+      end
+      
+      def attributes
+        @attributes || {}
+      end
+
+      def attributes= val
+        @attributes = val || {}
       end
 
       def method_missing(method_sym, *arguments, &block)
@@ -40,6 +46,7 @@ module WrAPI
       end
 
       def respond_to?(method_sym, include_private = false)
+        @attributes ||= {}
         if @attributes.include? method_sym.to_s
           true
         else
@@ -52,15 +59,15 @@ module WrAPI
       end
 
       def accessor(method)
-          case @attributes[method]
-          when Hash
-            @attributes[method] = self.class.new(@attributes[method])
-          when Array
-            # make deep copy
-            @attributes[method] = Entity.entify(@attributes[method])
-          else
-            @attributes[method]
-          end
+        case @attributes[method]
+        when Hash
+          @attributes[method] = self.class.new(@attributes[method])
+        when Array
+          # make deep copy
+          @attributes[method] = Entity.entify(@attributes[method])
+        else
+          @attributes[method]
+        end
       end
       
       def clone
@@ -68,6 +75,11 @@ module WrAPI
         c.attributes = @attributes.clone
         c
       end
+
+      def ==(other)
+        (self.class == other.class) && (self.attributes.eql? other.attributes)
+      end
+      alias eql? ==
 
       def self.entify(a)
         if ( a.count > 0 ) && ( a.first.is_a? Hash )
