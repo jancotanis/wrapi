@@ -1,8 +1,40 @@
-#require_relative './pagination'
-#require_relative './version'
+# frozen_string_literal: true
 
+# 
+# This module defines constants and methods related to the configuration of the WrAPI.
+# It provides a set of default configuration options and allows these options to be overridden.
+# 
+# Constants:
+# - VALID_OPTIONS_KEYS: An array of valid keys in the options hash when configuring a WrAPI::API.
+# - DEFAULT_CONNECTION_OPTIONS: Default connection options (empty hash).
+# - DEFAULT_FORMAT: Default response format (:json).
+# - DEFAULT_PAGE_SIZE: Default page size for paged responses (500).
+# - DEFAULT_USER_AGENT: Default user agent string.
+# - DEFAULT_PAGINATION: Default pagination class.
+# 
+# Attributes:
+# - access_token: Access token for authentication.
+# - token_type: Type of the token.
+# - refresh_token: Token used to refresh the access token.
+# - token_expires: Expiration time of the token.
+# - client_id: Client ID for authentication.
+# - client_secret: Client secret for authentication.
+# - connection_options: Options for the connection.
+# - username: Username for authentication.
+# - password: Password for authentication.
+# - endpoint: API endpoint.
+# - logger: Logger instance.
+# - format: Response format.
+# - page_size: Page size for paged responses.
+# - user_agent: User agent string.
+# - pagination_class: Pagination class.
+# 
+# Methods:
+# - self.extended(base): Sets all configuration options to their default values when the module is extended.
+# - configure: Allows configuration options to be set in a block.
+# - options: Creates a hash of options and their values.
+# - reset: Resets all configuration options to their default values.
 module WrAPI
-
   # Defines constants and methods related to configuration
   # If configuration is overridden, please add following methods
   # @see [self.extended(base)] to initialize the Configuration
@@ -44,10 +76,11 @@ module WrAPI
 
     # The user agent that will be sent to the API endpoint if none is set
     DEFAULT_USER_AGENT = "Ruby API wrapper #{WrAPI::VERSION}".freeze
-    
+
+    # DEFAULT_PAGINATION is a constant that sets the default pagination strategy for WrAPI requests.
+    # It uses the DefaultPager class from the WrAPI::RequestPagination module.
     DEFAULT_PAGINATION = WrAPI::RequestPagination::DefaultPager
 
-    # @private
     attr_accessor *VALID_OPTIONS_KEYS
 
     # When this module is extended, set all configuration options to their default values

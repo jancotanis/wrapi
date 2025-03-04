@@ -26,7 +26,7 @@ describe 'connection' do
   end
   it '#1 valid endpoint' do
     c = ConnectionMockAPI.client({ format: 'html', endpoint: 'https://www.google.com' })
-    c.get( '/' )
+    c.get('/')
   rescue ArgumentError 
     # should not raise endpoint argument exception
     flunk 'Unexpected ArgumentError raised'
@@ -34,10 +34,10 @@ describe 'connection' do
   it '#1 valid endpoint, check content type' do
     c = ConnectionMockAPI.client({ format: 'html', endpoint: 'https://www.google.com' })
     assert_raises ArgumentError do
-      c.get_paged( '/' )
+      c.get_paged('/')
     end
-    c = ConnectionMockAPI.client({ format: :json, endpoint: 'http://ip.jsontest.com/' })
-    c.get_paged( '/' )
+    c = ConnectionMockAPI.client({ format: :json, endpoint: 'https://jsonplaceholder.typicode.com/todos/1' })
+    c.get_paged('/')
   rescue ArgumentError 
     # should not raise endpoint argument exception
     flunk 'Unexpected ArgumentError raised'
