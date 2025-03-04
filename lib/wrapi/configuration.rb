@@ -28,7 +28,7 @@
 # - page_size: Page size for paged responses.
 # - user_agent: User agent string.
 # - pagination_class: Pagination class.
-# 
+#
 # Methods:
 # - self.extended(base): Sets all configuration options to their default values when the module is extended.
 # - configure: Allows configuration options to be set in a block.
@@ -62,7 +62,7 @@ module WrAPI
     ].freeze
 
     # By default, don't set any connection options
-    DEFAULT_CONNECTION_OPTIONS = {}
+    DEFAULT_CONNECTION_OPTIONS = {}.freeze
 
     # The response format appended to the path and sent in the 'Accept' header if none is set
     #
@@ -75,7 +75,7 @@ module WrAPI
     DEFAULT_PAGE_SIZE = 500
 
     # The user agent that will be sent to the API endpoint if none is set
-    DEFAULT_USER_AGENT = "Ruby API wrapper #{WrAPI::VERSION}".freeze
+    DEFAULT_USER_AGENT = "Ruby API wrapper #{WrAPI::VERSION}"
 
     # DEFAULT_PAGINATION is a constant that sets the default pagination strategy for WrAPI requests.
     # It uses the DefaultPager class from the WrAPI::RequestPagination module.

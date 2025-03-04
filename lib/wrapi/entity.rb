@@ -32,7 +32,7 @@ module WrAPI
           @attributes = attr.clone
         end
       end
-      
+
       # Returns the attributes of the entity
       #
       # @return [Hash] the attributes of the entity
@@ -111,9 +111,9 @@ module WrAPI
       #
       # @return [Entity] the cloned entity
       def clone
-        c = super
-        c.attributes = @attributes.clone
-        c
+        cln = super
+        cln.attributes = @attributes.clone
+        cln
       end
 
       # Checks if two entities are equal
@@ -130,7 +130,7 @@ module WrAPI
       # @param attribute [Array<Hash>] the array of hashes
       # @return [Array<Entity>] the array of entities
       def self.entify(attribute)
-        if (attribute.count > 0) && (attribute.first.is_a? Hash)
+        if attribute.any? && (attribute.first.is_a? Hash)
           attribute.dup.map do |item|
             #item.is_a?(Hash) ? self.class.new(item) : item
             Entity.create(item)
