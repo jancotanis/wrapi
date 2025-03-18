@@ -43,3 +43,6 @@
 
 ## [0.4.6] - 2024-06-17
 - fix issue with loading Entity from yaml
+
+## [0.4.7] - 2025-03-18
+- fix obsolete escape

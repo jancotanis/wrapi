@@ -190,7 +190,7 @@ module WrAPI
     def escape_path(path)
       uri = URI::Parser.new
       _path = uri.parse(path)
-      _path.path = uri.escape(_path.path)
+      _path.path = URI::RFC2396_PARSER.escape(_path.path)
       _path
     end
   end
