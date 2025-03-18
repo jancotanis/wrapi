@@ -165,7 +165,7 @@ describe 'entity' do
       f.puts(YAML.dump(e))
     end
 
-    ee = YAML.load_file(YAML_FILE)
+    ee = YAML.unsafe_load(File.read(YAML_FILE))
     assert e.eql?(ee), 'object load from yaml must be equal'
   end
 end
