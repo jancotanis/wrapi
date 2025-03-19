@@ -105,6 +105,7 @@ module WrAPI
       connection.response :logger, logger, { headers: true, bodies: true } do |log|
         # Filter sensitive information from JSON content, such as passwords and access tokens.
         log.filter(/("password":")(.+?)(".*)/, '\1[REMOVED]\3')
+        log.filter(/([&?]password=)[^&]*/, '\1[REMOVED]')
         log.filter(/("[Aa]ccess_?[Tt]oken":")(.+?)(".*)/, '\1[REMOVED]\3')
         # filter sensitive header content such as client secrets and authorization headers
         log.filter(/(client[-_]secret[:=].)([^&]+)/, '\1[REMOVED]')

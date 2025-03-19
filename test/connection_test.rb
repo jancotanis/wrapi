@@ -42,5 +42,4 @@ describe 'connection' do
     # should not raise endpoint argument exception
     flunk 'Unexpected ArgumentError raised'
   end
-
 end

@@ -95,7 +95,7 @@ module WrAPI
     #
     # @return [Boolean] true if the format is JSON, false otherwise
     def is_json?
-      format && 'json'.eql?(format.to_s)
+      'json'.eql?(format&.to_s)
     end
 
     private
