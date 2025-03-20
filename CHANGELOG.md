@@ -1,4 +1,4 @@
-## [Unreleased]
+## Changelog
 
 ## [0.1.0] - 2024-02-2
 - Initial release extracted from CloudAlly gem
@@ -46,3 +46,6 @@
 
 ## [0.4.7] - 2025-03-18
 - fix obsolete escape
+
+## [0.4.8] - 2025-03-20
+- scramble passwords in www encoded content
