@@ -29,7 +29,6 @@ end
 
 describe 'authentication' do
   it '#1 auth, check api_auth' do
-#    AuthMockAPI.mock('1')
     c = AuthMockAPI.mock_client('1')
     c.api_auth('1')
 
@@ -40,8 +39,6 @@ describe 'authentication' do
   end
   it '#2 auth, check api_auth username/password' do
     options = { username: 'username', password: 'password' }
-#    AuthMockAPI.mock('2', options)
-    
     c = AuthMockAPI.mock_client('2', options, options)
     c.api_auth('2')
 
@@ -51,10 +48,7 @@ describe 'authentication' do
     assert value(c.token_expires).must_equal(123456789)
   end
   it '#3 auth, check api_auth username/password' do
-
     token = 'refresh-token'
-#    AuthMockAPI.mock('3', { refreshToken: token })
-    
     c = AuthMockAPI.mock_client('3', {}, { refreshToken: token })
     c.api_refresh('3', token)
 

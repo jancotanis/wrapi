@@ -62,7 +62,7 @@ module WrAPI
     ].freeze
 
     # By default, don't set any connection options
-    DEFAULT_CONNECTION_OPTIONS = {}.freeze
+    DEFAULT_CONNECTION_OPTIONS = {}
 
     # The response format appended to the path and sent in the 'Accept' header if none is set
     #
