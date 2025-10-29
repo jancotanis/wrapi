@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'faraday'
+require File.expand_path('middleware/rate_throttle_middleware', __dir__)
 
 module WrAPI
   # @private
