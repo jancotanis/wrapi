@@ -64,6 +64,10 @@ module WrAPI
     # By default, don't set any connection options
     DEFAULT_CONNECTION_OPTIONS = {}
 
+
+    # By default token type used in authorizaion header
+    DEFAULT_TOKEN_TYPE = 'Bearer'
+
     # The response format appended to the path and sent in the 'Accept' header if none is set
     #
     # @note JSON is the only available format at this time
@@ -103,7 +107,6 @@ module WrAPI
     # Reset all configuration options to defaults
     def reset
       self.access_token       = nil
-      self.token_type         = nil
       self.refresh_token      = nil
       self.token_expires      = nil
       self.client_id          = nil
@@ -113,6 +116,8 @@ module WrAPI
       self.endpoint           = nil
 
       self.logger             = nil
+
+      self.token_type         = DEFAULT_TOKEN_TYPE
       self.connection_options = DEFAULT_CONNECTION_OPTIONS
       self.format             = DEFAULT_FORMAT
       self.page_size          = DEFAULT_PAGE_SIZE

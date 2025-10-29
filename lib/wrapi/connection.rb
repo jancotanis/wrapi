@@ -74,7 +74,7 @@ module WrAPI
     # @return [void]
     # @note The authorization header will only be set if the access_token is present.
     def setup_authorization(connection)
-      connection.headers['Authorization'] = "Bearer #{access_token}" if access_token
+      connection.headers['Authorization'] = "#{token_type} #{access_token}" if access_token && token_type
     end
 
     # Sets up the headers for the given connection. Override to set own headers.
