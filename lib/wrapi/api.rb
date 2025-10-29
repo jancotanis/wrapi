@@ -23,7 +23,7 @@ module WrAPI
   # @see WrAPI::Request
   # @see WrAPI::Authentication
   class API
-    attr_accessor *WrAPI::Configuration::VALID_OPTIONS_KEYS
+    attr_accessor (*WrAPI::Configuration::VALID_OPTIONS_KEYS)
 
     # Initializes a new API object with the given options.
     #
