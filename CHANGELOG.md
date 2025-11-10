@@ -68,3 +68,11 @@
 ## [0.4.9] - 2025-03-20
 
 - freeze causes issue so connection options can't be merged!
+
+## [0.5.0] - 2025-10-20
+
+- generic use of token type
+
+## [0.5.1] - 2025-11-10
+
+- do not assign token type when empty

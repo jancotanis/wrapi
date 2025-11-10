@@ -62,10 +62,10 @@ module WrAPI
     def api_process_token(response)
       raise ArgumentError.new("Response cannot be nil") if response.nil?
 
-      token = self.access_token = response['accessToken']
-      self.token_type        = response['tokenType']
-      self.refresh_token     = response['refreshToken']
-      self.token_expires     = response['expiresIn']
+      token = self.access_token = response['accessToken'] if response['accessToken']
+      self.token_type        = response['tokenType'] if response['tokenType']
+      self.refresh_token     = response['refreshToken'] if response['refreshToken']
+      self.token_expires     = response['expiresIn'] if response['expiresIn']
       raise StandardError.new("Could not find valid accessToken; response #{response}") if token.to_s.empty?
 
       token
