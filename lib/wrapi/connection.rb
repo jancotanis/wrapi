@@ -43,8 +43,8 @@ module WrAPI
         setup_headers(connection)
         connection.response :json, content_type: /\bjson$/
         connection.use Faraday::Request::UrlEncoded
-
         setup_logger_filtering(connection, logger) if logger
+        connection.use WrAPI::RateThrottleMiddleware, limit: rate_limit, period: rate_period if rate_limit && rate_period
       end
     end
 

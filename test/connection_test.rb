@@ -9,7 +9,14 @@ module ConnectionMockAPI
 
   def self.client(options = {})
     WebMock.allow_net_connect!
-    WrAPI::API.new({ logger: Logger.new(CON_LOGGER) }.merge(options))
+    c = WrAPI::API.new({ logger: Logger.new(CON_LOGGER) }.merge(options))
+    # create public connection
+    class << c
+      def conn
+        connection
+      end
+    end
+    c
   end
 end
 
@@ -24,14 +31,14 @@ describe 'connection' do
   rescue
     puts c.inspect
   end
-  it '#1 valid endpoint' do
+  it '#2 valid endpoint' do
     c = ConnectionMockAPI.client({ format: 'html', endpoint: 'https://www.google.com' })
     c.get('/')
   rescue ArgumentError 
     # should not raise endpoint argument exception
     flunk 'Unexpected ArgumentError raised'
   end
-  it '#1 valid endpoint, check content type' do
+  it '#3 valid endpoint, check content type' do
     c = ConnectionMockAPI.client({ format: 'html', endpoint: 'https://www.google.com' })
     assert_raises ArgumentError do
       c.get_paged('/')
@@ -42,4 +49,12 @@ describe 'connection' do
     # should not raise endpoint argument exception
     flunk 'Unexpected ArgumentError raised'
   end
+  it '#4 check middleware' do
+    c = ConnectionMockAPI.client({ format: 'html', endpoint: 'https://www.google.com' })
+    
+    refute c.conn.builder.handlers.any?{ |m| m.name == WrAPI::RateThrottleMiddleware.to_s}
+    c = ConnectionMockAPI.client({ format: 'html', endpoint: 'https://www.google.com', rate_limit: 100, rate_period: 60 })
+    assert c.conn.builder.handlers.any?{ |m| m.name == WrAPI::RateThrottleMiddleware.to_s}
+  end
+  
 end

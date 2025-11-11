@@ -76,3 +76,4 @@
 ## [0.5.1] - 2025-11-10
 
 - do not assign token type when empty
+- add rate throttling depending parameters

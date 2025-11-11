@@ -58,7 +58,9 @@ module WrAPI
       :format,
       :page_size,
       :user_agent,
-      :pagination_class
+      :pagination_class,
+      :rate_limit,
+      :rate_period
     ].freeze
 
     # By default, don't set any connection options
@@ -114,7 +116,8 @@ module WrAPI
       self.username           = nil
       self.password           = nil
       self.endpoint           = nil
-
+      self.rate_limit         = nil
+      self.rate_period        = nil
       self.logger             = nil
 
       self.token_type         = DEFAULT_TOKEN_TYPE
